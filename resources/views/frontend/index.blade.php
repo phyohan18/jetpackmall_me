@@ -76,14 +76,25 @@
                             		$photos = json_decode($topitem->photo);
                             		$photo = $photos[0];
 
+                            		$latest_unitprice = $topitem->price;
+                            		$latest_discountprice = $topitem->discount;
+
                             	@endphp
                                 <a href="#" class="latest-product__item">
                                     <div class="latest-product__item__pic">
                                         <img src="{{ asset($photo) }}" alt="" style="width: 150px;height: 100px; object-fit: cover;">
                                     </div>
                                     <div class="latest-product__item__text">
-                                        <h6>{{ $topitem->name }}</h6>
-                                        <span>$30.00</span>
+                                        <h6>{{ Str::limit($latestitem->name,20) }}</h6>
+                                        @if($latest_discountprice)
+											<span> {{ $latest_discountprice }}Ks </span>
+											<del class="text-muted">
+												{{ $latest_unitprice }}Ks
+											</del>
+                                        @else
+                                        	<span >{{ $latest_unitprice }} Ks</span>
+                                        @endif
+
                                     </div>
                                 </a>
                               	@endforeach

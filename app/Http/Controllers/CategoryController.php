@@ -105,10 +105,15 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validator = $request->validate([
+            'name' =>['required','string','max:255','unique:categories'],
+            'photo' => 'required|mimes:jpeg,bmp,png,jpg' //unique a nouk ka table
+
+        ]);
         $name = $request->name;
         $newphoto = $request->photo;
         $oldphoto = $request->oldphoto;
-
+        // dd($oldphoto);
         if ($request->hasFile('photo')) {
             //File Upload
             $imageName = time().'.'.$newphoto->extension();
@@ -134,7 +139,7 @@ class CategoryController extends Controller
 
         return redirect()->route('backside.category.index')->with('successMsg','Existing Category is UPDATED in your data');
 
-        dd($name);
+        // dd($name);
     }
 
     /**

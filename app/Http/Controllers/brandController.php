@@ -87,7 +87,8 @@ class brandController extends Controller
      */
     public function edit($id)
     {
-        //
+        $brand = Brand::find($id);
+        return view('backend.brand.edit',compact('brand'));
     }
 
     /**
@@ -99,7 +100,50 @@ class brandController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'photo' => 'sometimes|mimes:jpeg,bmp,png,jpg'
+
+        ]);
+
+        if($validator)
+        {
+            $name = $request->name;
+            $newphoto = $request->photo;
+            $oldphoto = $request->oldPhoto;
+
+            // File Upoload
+            if ($request->hasFile('photo')) {
+                $imageName = time().'.'.$newphoto->extension();  
+           
+                $newphoto->move(public_path('images/brand'), $imageName);
+
+                $filepath = 'images/brand/'.$imageName;
+
+                if(\File::exists(public_path($oldphoto))){
+                    \File::delete(public_path($oldphoto));
+                }
+
+            }else{
+                
+                $filepath = $oldphoto;
+
+            }
+
+            // Data insert
+            $brand = Brand::find($id);
+            $brand->name = $name;
+            $brand->logo = $filepath;
+
+            $brand->save();
+
+            // Return 
+            return redirect()->route('backside.brand.index')->with("successMsg", "New Brand is UPDATED in your data");
+        }
+        else
+        {
+            return Redirect::back()->withErrors($validator);
+        }
     }
 
     /**

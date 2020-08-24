@@ -61,10 +61,10 @@
                         </a>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="page-login.html">
+                        <a class="dropdown-item" href="javascript:void(0)" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">   
                             <i class="icofont-logout"></i>
-                            Logout
-                        </a>
+                            Logout </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf</form>
                     </li>
                   </ul>
                 </li>
@@ -76,10 +76,10 @@
         <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
 
         <aside class="app-sidebar">
-            <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg" alt="User Image">
+            <div class="app-sidebar__user"><img class="app-sidebar__user-avatar img-fluid" src="{{ asset(Auth::User()->profile )}}" alt="User Image" style="width: 70px; height: 70px;">
                 <div>
-                  <p class="app-sidebar__user-name">John Doe</p>
-                  <p class="app-sidebar__user-designation">Frontend Developer</p>
+                  <p class="app-sidebar__user-name">{{ Auth::user()->name }}</p>
+                  <p class="app-sidebar__user-designation">{{ Auth::user()->roles()->pluck('name')[0] }}</p>
                 </div>
             </div>
             
@@ -187,6 +187,7 @@
             ga('send', 'pageview');
           }
         </script>
+        @yield("script_content")
 
         
     </body>

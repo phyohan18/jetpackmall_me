@@ -11,7 +11,7 @@
 	 <main class="app-content">
             <div class="app-title">
                 <div>
-                    <h1> <i class="icofont-list"></i> Category Form </h1>
+                    <h1> <i class="icofont-list"></i> Category Edit Form </h1>
                 </div>
                 <ul class="app-breadcrumb breadcrumb side">
                     <a href="{{ route('backside.category.index') }}" class="btn btn-outline-primary">
@@ -28,7 +28,7 @@
                                 @csrf {{-- to prevent from hackers --}}
                                 @method('PUT')
                                 
-                                <input type="hidden" name="oldPhoto" value="{{ $photo }}">
+                                <input type="hidden" name="oldphoto" value="{{ $photo }}">
 
                                 <div class="form-group row">
                                     <label for="name_id" class="col-sm-2 col-form-label"> Name </label>
@@ -57,7 +57,7 @@
                                       <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                                           <input type="file" id="photo_id" name="photo">
                                           <div class="text-danger" form-control-feedback>
-                                              {{ $errors->first('name') }}
+                                              {{ $errors->first('photo') }}
                                           </div>                                          
                                       </div>
                                       </div>

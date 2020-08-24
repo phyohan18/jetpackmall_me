@@ -22,9 +22,11 @@
                                     <label for="name_id" class="col-sm-2 col-form-label"> Name </label>
                                     <div class="col-sm-10">
                                       <input type="text" class="form-control" id="name_id" name="name">
+                                    
                                       <div class="text-danger" form-control-feedback>
                                           {{ $errors->first('name') }}
                                       </div>
+
                                     </div>
                                 </div>
 
@@ -33,7 +35,7 @@
                                     <div class="col-sm-10">
                                       <input type="file" id="photo_id" name="photo">
                                         <div class="text-danger" form-control-feedback>
-                                          {{ $errors->first('name') }}
+                                          {{ $errors->first('photo') }}
                                         </div>
                                     </div>
                                 </div>

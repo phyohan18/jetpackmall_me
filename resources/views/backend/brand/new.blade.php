@@ -31,7 +31,7 @@
                                     <div class="col-sm-10">
                                       <input type="file" id="photo_id" name="photo">
                                        <div class="text-danger" form-control-feedback>
-                                          {{ $errors->first('name') }}
+                                          {{ $errors->first('photo') }}
                                         </div>
                                     </div>
                                 </div>

@@ -54,20 +54,33 @@
             </a>
         </div>
         <div class="humberger__menu__widget">
+            @guest
+
+            <div class="header__top__right__auth">
+                <a href="{{ route('register') }}"><i class="fa fa-user"></i> Register</a>
+            </div>
+            <div class="header__top__right__auth">
+                <a href="{{ route('login') }}"><i class="fa fa-user"></i> Login</a>
+            </div>
+
+            @else
+
             <div class="header__top__right__language">
-                <img src="{{ asset('frontend/img/emoji.png') }}" alt="" class="userprofile">
-                <div> User's Account </div>
+                <img src="{{ asset(Auth::user()->profile) }}" alt="" class="userprofile">
+                <div> {{ Auth::user()->name }} Account </div>
                 <span class="arrow_carrot-down"></span>
                 <ul>
                     <li><a href="#"> Profile </a></li>
                     <li><a href="#"> Order </a></li>
-                    <li><a href="#"> Sign Out </a></li>
+                    <li><a href="javascript:void(0)" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"> Sign Out </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf</form>
+                    </li>
 
                 </ul>
             </div>
-            <div class="header__top__right__auth">
-                <a href="#"><i class="fa fa-user"></i> Login</a>
-            </div>
+
+            @endif
+
         </div>
         <nav class="humberger__menu__nav mobile-menu">
             <ul>
@@ -124,19 +137,30 @@
                                 <a href="#"><i class="fa fa-linkedin"></i></a>
                                 <a href="#"><i class="fa fa-pinterest-p"></i></a>
                             </div>
+                             @guest
+
+                            <div class="header__top__right__auth">
+                                <a href="{{ route('register') }}"><i class="fa fa-user"></i> Register</a>
+                            </div>
+                            <div class="header__top__right__auth">
+                                <a href="{{ route('login') }}"><i class="fa fa-user"></i> Login</a>
+                            </div>
+
+
+                            @else
                             <div class="header__top__right__language">
-                                <img src="frontend/img/emoji.png" alt="" class="userprofile">
-                                <div> User Account </div>
+                                <img src="{{ asset(Auth::user()->profile) }}" alt="" class="userprofile">
+                                <div> {{ Auth::user()->name }} Account </div>
                                 <span class="arrow_carrot-down"></span>
                                 <ul>
                                     <li><a href="#"> Profile </a></li>
                                     <li><a href="#"> Order </a></li>
-                                    <li><a href="#"> Sign Out </a></li>
+                                    <li><a href="javascript:void(0)" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"> Sign Out </a>
+                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf</form></li>
+
                                 </ul>
                             </div>
-                            <div class="header__top__right__auth">
-                                <a href="#"><i class="fa fa-user"></i> Login</a>
-                            </div>
+                             @endif
                         </div>
                     </div>
                 </div>
@@ -156,7 +180,7 @@
                                 <a href="{{ route('index')}}">Home</a>
                             </li>
                             <li>
-                                <a href="{{ route('promotion')}}"> Promotion </a>
+                                <a href=""> Promotion </a>
                             </li>
                             <li><a href="#"> Merchants </a>
                                 <ul class="header__menu__dropdown">
@@ -189,7 +213,7 @@
     </header>
     <!-- Header Section End -->
         <!-- Hero Section Begin -->
-    <section class="hero">
+    <section class="hero {{ Request::segment(1) == '' ? '' :'hero-normal' }}">
         <div class="container">
             <div class="row">
                 <div class="col-lg-3">
@@ -224,14 +248,16 @@
                             </div>
                         </div>
                     </div>
-                    <div class="hero__item set-bg" data-setbg="frontend/img/hero/banner.jpg">
+                    @if(Request::segment(1) == '' || Request::segment(1) == 'index')
+                        <div class="hero__item set-bg bg-light">
                         <div class="hero__text">
                             <span>FRUIT FRESH</span>
                             <h2>Vegetable <br />100% Organic</h2>
                             <p>Free Pickup and Delivery Available</p>
                             <a href="#" class="primary-btn">SHOP NOW</a>
                         </div>
-                    </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -318,6 +344,7 @@
     <script src="{{ asset('frontend/js/mixitup.min.js')}}"></script>
     <script src="{{ asset('frontend/js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('frontend/js/main.js') }}"></script>
+    <script src="{{ asset('shoppingcart.js') }}"></script>
 
 
 
